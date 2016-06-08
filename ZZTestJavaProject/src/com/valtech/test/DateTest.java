@@ -42,7 +42,7 @@ public class DateTest {
 		
 		System.out.println("=============="+sqlDate);
 		System.out.println("=============="+sqlTime);
-		
+		System.out.println("=============="+sqlTime);
 		//java.util.Calendar cal = java.util.Calendar.getInstance();
 		long tzoffset = -(Time.valueOf("00:00:00").getTime());
 		  
