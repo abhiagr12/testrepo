@@ -24,7 +24,7 @@ import java.util.Map;
  */
 public class DateTest {
 
-    public static void main(String[] abc){
+    public static void main(String[] abc){ 
     	System.out.println("-----"+getStrDate(getUtilDate("20150122", "231135")));
     	long ime = System.currentTimeMillis();
     	System.out.println("start time"+new Date(ime));
