@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns="http://com/blog/samples/webservices/accountservice" 
+	targetNamespace="http://com/blog/samples/webservices/accountservice" 
+	xmlns:acc="http://webservices.samples.blog.com" 
+	elementFormDefault="qualified">
+	
+	<xs:import namespace="http://webservices.samples.blog.com" schemaLocation="AccountDetails1.xsd"/>
+	<xs:complexType name="AccountDetailsRequest">
+		<xs:sequence>
+			<xs:element name="accountNumber" type="xs:string" nillable="true"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AccountDetailsResponse">
+		<xs:sequence>
+			<xs:element name="AccountDetails" type="acc:Account" nillable="true"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

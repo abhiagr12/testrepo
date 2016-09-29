@@ -1,0 +1,93 @@
+<project name="antJavaProject" default="all" basedir=".">
+	<property name="src.dir" location="src" />
+	<property name="build.dir" location="bin" />
+	<taskdef resource="net/sf/antcontrib/antlib.xml" classpath="lib/ant-contrib-1.0b3.jar" />
+	
+	<target name="all" description="compile the source ">
+		<mkdir dir="${build.dir}" />
+		<echo message="building extension ..." />
+		<javac includeantruntime="false" srcdir="${src.dir}" destdir="${build.dir}" />
+	</target>
+	<target name="clean" description="compile the source ">
+		<echo message="building extension ..." />
+		<delete dir="gensrc" />
+	</target>
+	<target name="build">
+		<gen />
+		<genacc />
+	</target>
+	
+	<target name="buildgen">
+		<taskdef name="xjc" classname="com.sun.tools.xjc.XJCTask">
+			<classpath>
+				<fileset dir="lib">
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+		</taskdef>
+		<mkdir dir="gensrc" />
+		<xjc destdir="gensrc">
+			<schema dir="xsd/account" includes="*.xsd"/>
+			<arg value="-npa" />
+			<depends dir="xsd/account" includes="*.xsd" />
+			<produces dir="gensrc" includes="**/*" />
+		</xjc>
+	</target>
+	
+	<macrodef name="gen" description="compile the source ">
+		<sequential>
+			<taskdef name="xjc" classname="com.sun.tools.xjc.XJCTask">
+				<classpath>
+					<fileset dir="lib">
+						<include name="*.jar" />
+					</fileset>
+				</classpath>
+			</taskdef>
+			<echo>Starting....</echo>
+			<for param="schema">
+				<path>
+					<fileset dir="xsd/avaya" includes="*.xsd" />
+				</path>
+				<sequential>
+					<echo>generating Java classes from WSDL @{schema}</echo>
+					<mkdir dir="gensrc/com/westconb2b/integration/generic/dtos" />
+					<xjc schema="@{schema}" package="com.westconb2b.integration.generic.dtos" binding="xsd/avaya/xsd-binding.xml" destdir="gensrc">
+						<produces dir="gensrc/com/westconb2b/integration/generic/dtos">
+							<include name="*.java" />
+						</produces>
+						<depends file="@{schema}" />
+					</xjc>
+				</sequential>
+			</for>
+		</sequential>
+	</macrodef>
+	
+	<macrodef name="genacc" description="compile the source ">
+		<sequential>
+			<taskdef name="xjc" classname="com.sun.tools.xjc.XJCTask">
+				<classpath>
+					<fileset dir="lib">
+						<include name="*.jar" />
+					</fileset>
+				</classpath>
+			</taskdef>
+			<for param="schema">
+				<path>
+					<fileset dir="xsd/account" includes="*.xsd" />
+				</path>
+				<sequential>
+					<echo>generating Java classes from WSDL @{schema}</echo>
+					<mkdir dir="gensrc/com/westconb2b/acc/generic/dtos" />
+					<xjc schema="@{schema}" package="com.westconb2b.acc.generic.dtos" destdir="gensrc">
+						<arg value="-npa" />
+						<arg value="-nv" />
+						<produces dir="gensrc/com/westconb2b/acc/generic/dtos">
+							<include name="*.java" />
+						</produces>
+						<depends file="@{schema}" />
+					</xjc>
+				</sequential>
+			</for>
+		</sequential>
+	</macrodef>
+</project>

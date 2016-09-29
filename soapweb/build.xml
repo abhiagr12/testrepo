@@ -1,0 +1,40 @@
+<project name="soapweb" default="all" basedir=".">
+	<property name="src.dir" location="src" />
+	<property name="build.dir" location="bin" />
+	<taskdef resource="net/sf/antcontrib/antlib.xml" classpath="lib/ant-contrib-1.0b3.jar" />
+	
+	<target name="all" description="compile the source ">
+		<mkdir dir="${build.dir}" />
+		<echo message="building extension ..." />
+		<javac includeantruntime="false" srcdir="${src.dir}" destdir="${build.dir}" />
+	</target>
+	
+	<target name="clean" description="compile the source ">
+		<echo message="building extension ..." />
+		<delete dir="gensrc" />
+		<delete dir="build" />
+	</target>
+	
+	<target name="build">
+		<buildgen />
+	</target>
+	
+	<macrodef name="buildgen">
+		<sequential>
+			<taskdef name="xjc" classname="com.sun.tools.xjc.XJCTask">
+				<classpath>
+					<fileset dir="lib">
+						<include name="*.jar" />
+					</fileset>
+				</classpath>
+			</taskdef>
+			<mkdir dir="gensrc" />
+			<xjc destdir="gensrc">
+				<schema dir="xsd/account" includes="*.xsd"/>
+				<arg value="-npa" />
+				<depends dir="xsd/account" includes="*.xsd" />
+				<produces dir="gensrc" includes="**/*" />
+			</xjc>
+		</sequential>
+	</macrodef>
+</project>

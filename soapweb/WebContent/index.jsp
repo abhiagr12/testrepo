@@ -1,0 +1,1 @@
+<a href="http://localhost:8080/soapweb/services/b2bAccount?wsdl">http://localhost:8080/soapweb/services/b2bAccount?wsdl</a>

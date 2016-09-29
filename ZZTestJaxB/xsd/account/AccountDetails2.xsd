@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://services.soaptest.com/" xmlns:ns0="http://com/blog/samples/webservices/accountservice" xmlns:tns="http://impl.services.soaptest.com/" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://services.soaptest.com/">
+   <xsd:import namespace="http://com/blog/samples/webservices/accountservice" schemaLocation="AccountDetails1.xsd"/>
+   <xsd:element name="createAccount">
+		<xsd:complexType>
+			<xsd:sequence>
+         		<xsd:element minOccurs="0" name="accountInfo" type="ns0:AccountDetailsRequest" />
+         		<xsd:element minOccurs="0" name="accountName" type="xsd:string" />
+      		</xsd:sequence>
+   		</xsd:complexType>
+   </xsd:element>
+   <xsd:element name="createAccountResponse">
+		<xsd:complexType>
+			<xsd:sequence>
+	        	<xsd:element minOccurs="0" name="accountDetailsResponse" type="ns0:AccountDetailsResponse" />
+	      	</xsd:sequence>
+	   	</xsd:complexType>
+   </xsd:element>
+</xsd:schema>
