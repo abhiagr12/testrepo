@@ -15,6 +15,8 @@ import com.b2baccount.generated.B2BAddAccountsImplServiceLocator;
  * <br>&nbsp;&nbsp;&nbsp;-s 
  * <br>&nbsp;&nbsp;&nbsp;b2bAccount.wsdl<br>
  * <br> java -cp "%CLASSPATH%;lib\*" org.apache.axis.wsdl.WSDL2Java -o genscr -p com.b2baccount.generated -s b2bAccount.wsdl
+ * <br>
+ * <br> more example http://www.digizol.com/2008/07/web-service-axis-tutorial-client-server.html
  * */
 
 public class MainClass {
