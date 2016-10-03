@@ -1,0 +1,21 @@
+<?xml version="1.0" ?><wsdl:definitions name="B2BAddAccountsImplService" targetNamespace="http://impl.services.soaptest.com/" xmlns:ns1="http://services.soaptest.com/" xmlns:ns2="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://impl.services.soaptest.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:import location="http://localhost:8080/soapweb/services/b2bAccount?wsdl=B2BAddAccounts.wsdl" namespace="http://services.soaptest.com/">
+    </wsdl:import>
+  <wsdl:binding name="B2BAddAccountsImplServiceSoapBinding" type="ns1:B2BAddAccounts">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"></soap:binding>
+    <wsdl:operation name="createAccount">
+      <soap:operation soapAction="" style="document"></soap:operation>
+      <wsdl:input name="createAccount">
+        <soap:body use="literal"></soap:body>
+      </wsdl:input>
+      <wsdl:output name="createAccountResponse">
+        <soap:body use="literal"></soap:body>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="B2BAddAccountsImplService">
+    <wsdl:port binding="tns:B2BAddAccountsImplServiceSoapBinding" name="B2BAddAccountsImplPort">
+      <soap:address location="http://localhost:8080/soapweb/services/b2bAccount"></soap:address>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
