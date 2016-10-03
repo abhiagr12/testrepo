@@ -22,17 +22,22 @@ public class AccountServiceClient extends WebServiceGatewaySupport {
 		acr.setAccountNumber(accountNumber);
 		serviceRequest.setAccountInfo(acr);
 		serviceRequest.setAccountName(accountName);
-		CreateAccountResponse res = getWebServiceTemplate().sendAndReceive(new WebServiceMessageCallback(){
+		//We can hit webservice with multiple methods provided by getWebServiceTemplate()
+		//1) by calling marshalSendAndReceive
+		CreateAccountResponse res = (CreateAccountResponse)getWebServiceTemplate().marshalSendAndReceive(serviceRequest);
+		
+		//2) by calling sendAndReceive
+		/*CreateAccountResponse res = getWebServiceTemplate().sendAndReceive(new WebServiceMessageCallback(){
 			@Override
-            public void doWithMessage(WebServiceMessage message) throws IOException, TransformerException {
+			public void doWithMessage(WebServiceMessage message) throws IOException, TransformerException {
 				MarshallingUtils.marshal(getWebServiceTemplate().getMarshaller(), serviceRequest, message);
 			}
 		}, new WebServiceMessageExtractor<CreateAccountResponse>(){
 			@Override
 			public CreateAccountResponse extractData(WebServiceMessage webservicemessage) throws IOException{
-                return (CreateAccountResponse) MarshallingUtils.unmarshal(getWebServiceTemplate().getUnmarshaller(), webservicemessage);
+				return (CreateAccountResponse) MarshallingUtils.unmarshal(getWebServiceTemplate().getUnmarshaller(), webservicemessage);
 			}
-		});
+		});*/
 		System.out.println(res.getAccountDetailsResponse().getAccountDetails().getAccountName());
 		System.out.println(res.getAccountDetailsResponse().getAccountDetails().getAccountNumber());
 		System.out.println(res.getAccountDetailsResponse().getAccountDetails().getAccountBalance());
