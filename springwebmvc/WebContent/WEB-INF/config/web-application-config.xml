@@ -47,6 +47,7 @@
 	
 	<bean id="authenticationProvider" class="com.security.CoreAuthenticationProvider" scope="singleton">
 		<property name="userDetailsService" ref="userDetailService"/>
+		<property name="baseMessageSource" ref="baseMessageSource"/>
 	</bean>
 	
 	<bean id="userDetailService" class="com.security.CoreUserDetailService" scope="singleton"/>
@@ -54,7 +55,7 @@
 	<bean id="baseMessageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource" >
 		<property name="basenames">
 			<list>
-				<value>/WEB-INF/messages/base</value>
+				<value>WEB-INF/messages/base</value>
 			</list>
 		</property>
 		<property name="defaultEncoding" value="UTF-8"/>
