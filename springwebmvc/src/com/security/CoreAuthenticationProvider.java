@@ -15,7 +15,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 public class CoreAuthenticationProvider implements AuthenticationProvider{
 	private UserDetailsService userDetailsService;
 	
-	MessageSource baseMessageSource;
+	private MessageSource baseMessageSource;
 	
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
