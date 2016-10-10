@@ -1,44 +1,18 @@
 package com.security;
 
-import java.util.Locale;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.context.MessageSource;
-import org.springframework.context.MessageSourceAware;
-import org.springframework.context.support.MessageSourceAccessor;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.AuthenticationServiceException;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.SpringSecurityMessageSource;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.authentication.AuthenticationServiceException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
-public class CoreAuthenticationProvider implements AuthenticationProvider, InitializingBean, MessageSourceAware{
+public class CoreAuthenticationProvider implements AuthenticationProvider{
 	private UserDetailsService userDetailsService;
-	private MessageSourceAccessor messageSource;
 	
-	public UserDetailsService getUserDetailsService() {
-		return userDetailsService;
-	}
-	public void setUserDetailsService(UserDetailsService userDetailsService) {
-		this.userDetailsService = userDetailsService;
-	}
-	
-	@Override
-	public void setMessageSource(MessageSource messageSource) {
-		this.messageSource = new MessageSourceAccessor(messageSource);;
-	}
-
-	@Override
-	public final void afterPropertiesSet() throws Exception {
-		if(userDetailsService == null){
-			throw new Exception("A UserDetailsService must be set");
-		}
-	}
-
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		String username = authentication.getPrincipal() != null ? authentication.getName() : "NONE_PROVIDED";
@@ -51,11 +25,11 @@ public class CoreAuthenticationProvider implements AuthenticationProvider, Initi
             if(credential instanceof String){
             	String enteredPassword = (String)credential;
             	if(!registeredPassword.equals(enteredPassword)){
-            		throw new BadCredentialsException(getMessageSource().getMessage("CoreAuthenticationProvider.badCredentials", "Bad credentials"));
+            		throw new BadCredentialsException("CoreAuthenticationProvider.badCredentials");
             	}
             }
         } catch(UsernameNotFoundException notFound) {
-            throw new BadCredentialsException(getMessageSource().getMessage("CoreAuthenticationProvider.badCredentials", "Bad credentials"), notFound);
+            throw new BadCredentialsException("CoreAuthenticationProvider.badCredentials", notFound);
         }
 		UsernamePasswordAuthenticationToken result = new UsernamePasswordAuthenticationToken(userDetails.getUsername(), authentication.getCredentials(), userDetails.getAuthorities());
         result.setDetails(authentication.getDetails());
@@ -82,12 +56,11 @@ public class CoreAuthenticationProvider implements AuthenticationProvider, Initi
 		return (UsernamePasswordAuthenticationToken.class.isAssignableFrom(authentication));
 	}
 	
-	public MessageSourceAccessor getMessageSource() {
-		return messageSource;
+	public UserDetailsService getUserDetailsService() {
+		return userDetailsService;
 	}
-	
-	public CoreAuthenticationProvider()
-    {
-		messageSource = SpringSecurityMessageSource.getAccessor();
-    }
+
+	public void setUserDetailsService(UserDetailsService userDetailsService) {
+		this.userDetailsService = userDetailsService;
+	}
 }
