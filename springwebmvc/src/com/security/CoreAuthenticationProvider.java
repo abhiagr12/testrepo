@@ -29,11 +29,11 @@ public class CoreAuthenticationProvider implements AuthenticationProvider{
             if(credential instanceof String){
             	String enteredPassword = (String)credential;
             	if(!registeredPassword.equals(enteredPassword)){
-            		throw new BadCredentialsException(baseMessageSource.getMessage("CoreAuthenticationProvider.badCredentials", null, Locale.ENGLISH));
+            		throw new BadCredentialsException(getBaseMessageSource().getMessage("CoreAuthenticationProvider.badCredentials", null, Locale.ENGLISH));
             	}
             }
         } catch(UsernameNotFoundException notFound) {
-            throw new BadCredentialsException(baseMessageSource.getMessage("CoreAuthenticationProvider.badCredentials", null, Locale.ENGLISH), notFound);
+            throw new BadCredentialsException(getBaseMessageSource().getMessage("CoreAuthenticationProvider.badCredentials", null, Locale.ENGLISH), notFound);
         }
 		UsernamePasswordAuthenticationToken result = new UsernamePasswordAuthenticationToken(userDetails.getUsername(), authentication.getCredentials(), userDetails.getAuthorities());
         result.setDetails(authentication.getDetails());
